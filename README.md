@@ -1,4 +1,4 @@
 # [WIP] cocp
 > [COOL](https://web.stanford.edu/class/cs143/) compiler in python
 
-Lex Generator、Parse Generator: [ply@dabeaz](https://github.com/dabeaz/ply)
+Lex Generator、Parse Generator: [ply(Python Lex-Yacc)@dabeaz](https://github.com/dabeaz/ply)
