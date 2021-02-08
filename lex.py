@@ -1,17 +1,6 @@
 import sys
 import ply.lex as lex
  # List of token names.   This is always required
-tokens = (
-    'NUMBER',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'LPAREN',
-    'RPAREN',
-    'ID'
-)
-
 
 reserved = {
     'if': 'IF',
@@ -35,6 +24,26 @@ reserved = {
     'false': 'FALSE' 
 } 
 
+tokens = [
+    'NUMBER',
+    'PLUS',
+    'MINUS',
+    'TIMES',
+    'DIVIDE',
+    'LPAREN',
+    'RPAREN',
+    'ID',
+    'LESSEQUAL',
+    'LESS',
+    'EQUAL',
+    'SEMICOLON',
+    'COMMA',
+    'ASSIGN',
+    'DISPATCH',
+    'LBLOCK',
+    'RBLOCK'
+] + list(reserved.values())
+
  # Regular expression rules for simple tokens
 t_PLUS    = r'\+'
 t_MINUS   = r'-'
@@ -42,7 +51,15 @@ t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
-
+t_LESSEQUAL = r'<='
+t_LESS = r'<'
+t_EQUAL = r'='
+t_SEMICOLON = r';'
+t_COMMA = r','
+t_ASSIGN = r'<-'
+t_DISPATCH = r'\.'
+t_LBLOCK = r'{'
+t_RBLOCK = r'}'
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
