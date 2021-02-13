@@ -40,7 +40,8 @@ tokens = [
     'DIVIDE',
     'LPAREN',
     'RPAREN',
-    'ID',
+    'TYPEID',
+    'OBJECTID',
     'LE',
     'LESS',
     'GREATER',
@@ -120,9 +121,14 @@ def t_COMMENT(t):
  r'(?:\(\*(?:(?!\*\))(.|\n|\r\n))*\*\)|\(\*[^\n|\r\n]*)'
  pass
 
-def t_ID(t):
+def t_TYPEID(t):
+ r'[A-Z][a-zA-Z_0-9]*'
+ t.type = reserved.get(t.value, 'TYPEID')
+ return t
+
+def t_OBJECTID(t):
  r'[a-zA-Z_][a-zA-Z_0-9]*'
- t.type = reserved.get(t.value, 'ID')
+ t.type = reserved.get(t.value, 'OBJECTID')
  return t
 
 # Error handling rule
