@@ -8,6 +8,14 @@ reserved = {
     'fi': 'FI',
     'in': 'IN', 
     'class': 'CLASS',
+    'Object': 'OBJECT_TYPE',
+    'Main': 'MAIN_TYPE',
+    'SELF_TYPE': 'SELF_TYPE',
+    'String': 'STRING_TYPE',
+    'Int': 'INT_TYPE',
+    'Bool': 'BOOL_TYPE',
+    'IO': 'IO_TYPE',
+    'self': 'SELF',
     'inherits': 'INHERITS',
     'let': 'LET',
     'loop': 'LOOP',
@@ -19,13 +27,13 @@ reserved = {
     'of': 'OF',
     'new': 'NEW',
     'isvoid': 'ISVOID',
-    'not': 'NOT',
-    'true': 'TRUE',
-    'false': 'FALSE' 
+    'not': 'NOT'
 } 
 
 tokens = [
-    'NUMBER',
+    'INT_CONST',
+    'STR_CONST',
+    'BOOL_CONST',
     'PLUS',
     'MINUS',
     'TIMES',
@@ -33,39 +41,72 @@ tokens = [
     'LPAREN',
     'RPAREN',
     'ID',
-    'LESSEQUAL',
+    'LE',
     'LESS',
+    'GREATER',
+    'GREATEREQUAL',
     'EQUAL',
     'SEMICOLON',
     'COMMA',
     'ASSIGN',
     'DISPATCH',
     'LBLOCK',
-    'RBLOCK'
+    'RBLOCK',
+    'COLON',
+    'LSQUAREBRACKET',
+    'RSQUAREBRACKET',
+    'DARROW',
+    'AT',
+    'INT_COMP'
 ] + list(reserved.values())
 
  # Regular expression rules for simple tokens
 t_PLUS    = r'\+'
-t_MINUS   = r'-'
+t_MINUS   = r'\-'
 t_TIMES   = r'\*'
-t_DIVIDE  = r'/'
+t_DIVIDE  = r'\/'
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
-t_LESSEQUAL = r'<='
-t_LESS = r'<'
-t_EQUAL = r'='
-t_SEMICOLON = r';'
-t_COMMA = r','
-t_ASSIGN = r'<-'
+t_LE = r'\<\='
+t_LESS = r'\<'
+t_GREATER= r'\>'
+t_GREATEREQUAL = r'\>\='
+t_EQUAL = r'\='
+t_DARROW = r'\=\>'
+t_SEMICOLON = r'\;'
+t_COMMA = r'\,'
+t_ASSIGN = r'\<\-'
 t_DISPATCH = r'\.'
-t_LBLOCK = r'{'
-t_RBLOCK = r'}'
+t_LBLOCK = r'\{'
+t_RBLOCK = r'\}'
+t_COLON = r'\:'
+t_LSQUAREBRACKET = r'\['
+t_RSQUAREBRACKET = r'\]'
+t_AT = r'\@'
+t_INT_COMP = r'~'
 
 # A regular expression rule with some action code
-def t_NUMBER(t):
+def t_INT_CONST(t):
  r'\d+'
  t.value = int(t.value)
  return t
+
+# A string rule
+
+def t_STR_CONST(t):
+  r'\"([^\\\n|\r\n]|\\.)*?\"'
+  return t
+
+# bool rule
+def t_BOOL_CONST(t):
+  r'^(true|false)$'
+  t.value 
+  if t.value == 'true':
+    t.value = True
+  else:
+    t.value = False
+  return t
+
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -73,10 +114,10 @@ def t_newline(t):
  t.lexer.lineno += len(t.value)
 
 # A string containing ignored characters (spaces and tabs)
-t_ignore  = ' \t'
+t_ignore  = ' \t\f\r\v'
 
 def t_COMMENT(t):
- r'(?:\(\*(?:(?!\*\))(.|\n|\r\n))*\*\))'
+ r'(?:\(\*(?:(?!\*\))(.|\n|\r\n))*\*\)|\(\*[^\n|\r\n]*)'
  pass
 
 def t_ID(t):
@@ -88,6 +129,8 @@ def t_ID(t):
 def t_error(t):
  print("Illegal character '%s'" % t.value[0])
  t.lexer.skip(1)
+
+
 
 # Build the lexer
 lexer = lex.lex()
