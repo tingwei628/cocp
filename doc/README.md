@@ -11,6 +11,11 @@ sudo apt install qemu
 sudo apt install gdb-multiarch
 ```
 
+## Execute
+```
+qemu-aarch64 [your_arm64_binary]
+```
+
 ## Debug
 ```
 qemu-aarch64 -g [your_debug_port] [your_arm64_binary]
