@@ -12,11 +12,11 @@ sudo apt install gdb-multiarch
 ```
 ## Compile
 ```
-//compile c++ into aarch64
+//compile c++ into executable(aarch64)
 // -g, add gdb debug symbol
 aarch64-linux-gnu-g++ -g -o [your_aarch64_binary] [your_cpp_file] -static
 
-//convert source code to .asm
+//compile c++ into object file(aarch64)
 aarch64-linux-gnu-g++ [your_cpp_file] -o [your_arm_file(.arm)]
 ```
 
