@@ -29,7 +29,7 @@ aarch64-linux-gnu-as a64.s -o a64.o && aarch64-linux-gnu-ld a64.o -o a64
 ```
   -S                       Compile only; do not assemble or link. => result is assembly file (.s)
   -c                       Compile and assemble, but do not link. => result is relocatable
-  -o <file>                Place the output into <file>.          => result is shared object
+  -o <file>                Place the output into <file>.          => result is shared object/executable
 ```
 
 
