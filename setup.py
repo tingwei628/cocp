@@ -2,7 +2,8 @@
 from setuptools import setup
 
 required=[
-    'ply'
+    'ply',
+    'pytest'
 ]
 
 setup(
