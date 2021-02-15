@@ -42,6 +42,5 @@ netstat -anp|grep "port_number"
 kill -9 [PID]
 ```
 
-Reference:
-
+## Reference:
 https://azeria-labs.com/arm-on-x86-qemu-user
