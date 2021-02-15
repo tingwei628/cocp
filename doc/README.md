@@ -16,9 +16,16 @@ sudo apt install gdb-multiarch
 // -g, add gdb debug symbol
 aarch64-linux-gnu-g++ -g -o [your_aarch64_executable] [your_cpp_file] -static
 
-//compile c++ into object file(aarch64)
+//compile c++ into shared object file(aarch64)
 aarch64-linux-gnu-g++ [your_cpp_file] -o [your_arm_file(.o)]
 ```
+
+```
+  -S                       Compile only; do not assemble or link. => result is assembly file (.s)
+  -c                       Compile and assemble, but do not link. => result is relocatable
+  -o <file>                Place the output into <file>.          => result is shared object
+```
+
 
 
 ## Execute
