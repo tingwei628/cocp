@@ -8,7 +8,7 @@ STD_LEXER_OUTPUT_FILENAME = 'lexer_test_std_output.txt'
 
 def setup():
   #print("SETUP")
-  #cocp_lex_output(INPUT_TEST_CL_FILENAME, COCP_LEXER_OUTPUT_FILENAME)
+  cocp_lex_output(INPUT_TEST_CL_FILENAME, COCP_LEXER_OUTPUT_FILENAME)
   pass
 
 def test_test_cl(): 
@@ -21,7 +21,7 @@ def test_test_cl():
   std_out_len = len(std_out_f_texts)
   out_len = len(out_f_texts)
   
-  assert out_len == std_out_len, 'out len failed'
+  check.equal(out_len, std_out_len)
   
   while i < std_out_len:
     check.equal(out_f_texts[i], std_out_f_texts[i])
