@@ -8,14 +8,13 @@ reserved = {
     'fi': 'FI',
     'in': 'IN', 
     'class': 'CLASS',
-    'Object': 'OBJECT_TYPE',
-    'Main': 'MAIN_TYPE',
-    'SELF_TYPE': 'SELF_TYPE',
-    'String': 'STRING_TYPE',
-    'Int': 'INT_TYPE',
-    'Bool': 'BOOL_TYPE',
-    'IO': 'IO_TYPE',
-    'self': 'SELF',
+    #'Object': 'OBJECT_TYPE',
+    #'Main': 'MAIN_TYPE',
+    #'SELF_TYPE': 'SELF_TYPE',
+    #'String': 'STRING_TYPE',
+    #'Int': 'INT_TYPE',
+    #'Bool': 'BOOL_TYPE',
+    #'IO': 'IO_TYPE',
     'inherits': 'INHERITS',
     'let': 'LET',
     'loop': 'LOOP',
@@ -86,6 +85,7 @@ t_RSQUAREBRACKET = r'\]'
 t_AT = r'\@'
 t_INT_COMP = r'~'
 
+
 # A regular expression rule with some action code
 def t_INT_CONST(t):
  r'\d+'
@@ -107,7 +107,6 @@ def t_BOOL_CONST(t):
   else:
     t.value = False
   return t
-
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -138,28 +137,26 @@ def t_error(t):
 
 
 
-# Build the lexer
-lexer = lex.lex()
-with open(sys.argv[1],'r') as f:
-    data = f.read()
-# Test it out
-"""
-data = '''
-3 + 4 * 10
-+ -20 *2
-'''
-"""
+def cocp_lex(input_code = ''):
+  result = []
+  # Build the lexer
+  lexer = lex.lex()
 
-# Give the lexer some input
-lexer.input(data)
+  # Give the lexer some input
+  lexer.input(input_code)
 
-# Tokenize
-while True:
- tok = lexer.token()
- if not tok:
-     break      # No more input
- print(tok)
+  # Tokenize
+  while True:
+    tok = lexer.token()
+    if not tok:
+      break      # No more input
+    result.append(tok)
+    print('#{tok_line} {tok_type} {tok_value}'.format(tok_line=tok.lineno, tok_type=tok.type, tok_value=tok.value))
+  return result
 
 
 if __name__ == '__main__':
-  r"\\"
+  print('=== lexer.py ===')
+  with open(sys.argv[1],'r') as f:
+      input_code = f.read()
+      cocp_lex(input_code)
