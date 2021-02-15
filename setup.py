@@ -3,7 +3,8 @@ from setuptools import setup
 
 required=[
     'ply',
-    'pytest'
+    'pytest',
+    'pytest-check'
 ]
 
 setup(

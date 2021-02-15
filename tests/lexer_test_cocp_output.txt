@@ -1,4 +1,3 @@
-===execute lex.py===
 #2 CLASS class
 #2 TYPEID CellularAutomaton
 #2 INHERITS inherits
@@ -200,9 +199,7 @@
 #49 THEN then
 #50 STR_CONST "X"
 #51 ELSE else
-Illegal character '''
 #52 DISPATCH .
-Illegal character '''
 #53 FI fi
 #54 RBLOCK }
 #54 SEMICOLON ;
@@ -345,8 +342,4 @@ Illegal character '''
 #89 SEMICOLON ;
 #90 OBJECTID self
 #90 SEMICOLON ;
-#91 RBLOCK }
-#92 RBLOCK }
-#92 SEMICOLON ;
-#93 RBLOCK }
 #93 SEMICOLON ;

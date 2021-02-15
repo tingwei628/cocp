@@ -137,13 +137,13 @@ def t_error(t):
 
 
 
-def cocp_lex(input_code = ''):
+def cocp_lex(input_codes = ''):
   result = []
   # Build the lexer
   lexer = lex.lex()
 
   # Give the lexer some input
-  lexer.input(input_code)
+  lexer.input(input_codes)
 
   # Tokenize
   while True:
@@ -151,12 +151,23 @@ def cocp_lex(input_code = ''):
     if not tok:
       break      # No more input
     result.append(tok)
-    print('#{tok_line} {tok_type} {tok_value}'.format(tok_line=tok.lineno, tok_type=tok.type, tok_value=tok.value))
+    # print('#{tok_line} {tok_type} {tok_value}'.format(tok_line=tok.lineno, tok_type=tok.type, tok_value=tok.value))
   return result
 
+def cocp_lex_output(input_filename=None, output_filename=None):
+  input_codes = ''
+  result = []
+  with open(input_filename, 'r') as f:
+    input_codes = f.read()
+  
+  result = cocp_lex(input_codes)
+  
+  with open(output_filename, 'w') as out_f:
+    for tok in result:
+      print('#{tok_line} {tok_type} {tok_value}'.format(tok_line=tok.lineno, tok_type=tok.type, tok_value=tok.value), file=out_f)
 
 if __name__ == '__main__':
   print('=== lexer.py ===')
   with open(sys.argv[1],'r') as f:
-      input_code = f.read()
-      cocp_lex(input_code)
+    input_codes = f.read()
+    cocp_lex(input_codes)
