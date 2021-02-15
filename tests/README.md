@@ -1,8 +1,6 @@
 ## Tests
 
-> file name matches the pattern: test_*.py or *_test.py.
-
-> function name starts with the test prefix.
+> [pytest] File name matches the pattern: test_*.py or *_test.py; Function name starts with the test prefix.
 
 
 ```
