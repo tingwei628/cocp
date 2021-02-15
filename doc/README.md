@@ -18,6 +18,11 @@ gdb-multiarch [your_arm64_binary]
 ```
 
 ```
+// quit gdb
+(gdb) q
+```
+
+```
 // free port used by gdb
 netstat -anp|grep "port_number"
 kill -9 [PID]
