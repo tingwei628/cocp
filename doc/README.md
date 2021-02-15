@@ -17,7 +17,7 @@ sudo apt install gdb-multiarch
 aarch64-linux-gnu-g++ -g -o [your_aarch64_executable] [your_cpp_file] -static
 
 //compile c++ into object file(aarch64)
-aarch64-linux-gnu-g++ [your_cpp_file] -o [your_arm_file(.arm)]
+aarch64-linux-gnu-g++ [your_cpp_file] -o [your_arm_file(.o)]
 ```
 
 
