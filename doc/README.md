@@ -16,3 +16,9 @@ sudo apt install gdb-multiarch
 qemu-aarch64 -g [your_debug_port] [your_arm64_binary]
 gdb-multiarch [your_arm64_binary]
 ```
+
+// free port used by gdb
+```
+netstat -anp|grep "port_number"
+kill -9 [PID]
+```
