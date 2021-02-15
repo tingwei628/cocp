@@ -10,16 +10,25 @@ sudo apt install qemu
 //GDB with support for multiple architecture 
 sudo apt install gdb-multiarch
 ```
+## Compile
+```
+//compile c++ into aarch64
+// -g, add gdb debug symbol
+aarch64-linux-gnu-g++ -g -o [your_aarch64_binary] [your_cpp_file] -static
+```
 
 ## Execute
 ```
-qemu-aarch64 [your_arm64_binary]
+qemu-aarch64 [your_aarch64_binary]
 ```
 
 ## Debug
 ```
-qemu-aarch64 -g [your_debug_port] [your_arm64_binary]
-gdb-multiarch [your_arm64_binary]
+// window 1
+qemu-aarch64 -g [your_por_number] [your_aarch64_binary]
+
+// window 2
+gdb-multiarch -q [your_aarch64_binary] -ex 'target remote :[your_por_number]'
 ```
 
 ```
