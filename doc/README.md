@@ -41,3 +41,7 @@ gdb-multiarch -q [your_aarch64_binary] -ex 'target remote :[your_por_number]'
 netstat -anp|grep "port_number"
 kill -9 [PID]
 ```
+
+Reference:
+
+https://azeria-labs.com/arm-on-x86-qemu-user
