@@ -26,7 +26,8 @@ reserved = {
     'of': 'OF',
     'new': 'NEW',
     'isvoid': 'ISVOID',
-    'not': 'NOT'
+    'not': 'NOT',
+    'error': 'ERROR'
 } 
 
 tokens = [
@@ -43,7 +44,6 @@ tokens = [
     'OBJECTID',
     'LE',
     'LESS',
-    'GREATER',
     'GREATEREQUAL',
     'EQUAL',
     'SEMICOLON',
@@ -53,11 +53,10 @@ tokens = [
     'LBLOCK',
     'RBLOCK',
     'COLON',
-    'LSQUAREBRACKET',
-    'RSQUAREBRACKET',
     'DARROW',
     'AT',
-    'INT_COMP'
+    'INT_COMP',
+     #'STRING_ERROR'
 ] + list(reserved.values())
 
  # Regular expression rules for simple tokens
@@ -69,7 +68,6 @@ t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
 t_LE = r'\<\='
 t_LESS = r'\<'
-t_GREATER= r'\>'
 t_GREATEREQUAL = r'\>\='
 t_EQUAL = r'\='
 t_DARROW = r'\=\>'
@@ -80,10 +78,14 @@ t_DISPATCH = r'\.'
 t_LBLOCK = r'\{'
 t_RBLOCK = r'\}'
 t_COLON = r'\:'
-t_LSQUAREBRACKET = r'\['
-t_RSQUAREBRACKET = r'\]'
 t_AT = r'\@'
 t_INT_COMP = r'~'
+
+states = (
+  ('COMMENT', 'exclusive'),       
+)
+
+t_COMMENT_ignore = ''
 
 
 # A regular expression rule with some action code
@@ -116,9 +118,30 @@ def t_newline(t):
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t\f\r\v'
 
+
 def t_COMMENT(t):
- r'(?:\(\*(?:(?!\*\))(.|\n|\r\n))*\*\)|\(\*[^\n|\r\n]*)'
- pass
+  #r'(?:\(\*(?:(?!\*\))(.|\n|\r\n))*\*\))'
+  r'\(\*'
+  t.lexer.code_start = t.lexer.lexpos
+  t.lexer.comment_count = 1
+  t.lexer.begin('COMMENT')
+
+
+def t_begin_COMMENT(t):
+  r'\(\*'
+  t.lexer.comment_count += 1
+
+def t_COMMENT_end(t):
+  r'\*\)'
+  t.lexer.comment_count -= 1 
+  
+  if t.lexer.comment_count == 0:
+    t.value = t.lexer.lexdata[t.lexer.code_start: t.lexer.lexpos]
+    #t.type = 'COMMENT'
+    t.lexer.lineno += t.value.count('\n')
+    t.lexer.lineno += t.value.count('\r\n')
+    t.lexer.begin('INITIAL')
+    
 
 def t_TYPEID(t):
  r'[A-Z][a-zA-Z_0-9]*'
@@ -130,11 +153,22 @@ def t_OBJECTID(t):
  t.type = reserved.get(t.value, 'OBJECTID')
  return t
 
+def t_COMMENT_error(t):
+  t.lexer.skip(1)
+
+"""
+def t_STRING_ERROR(t):
+  
+  t.type = 'ERROR'
+  print('ERROR "{err}"'.format(err=t))
+  t.lexer.skip(1)
+"""
+
 # Error handling rule
 def t_error(t):
- print("Illegal character '%s'" % t.value[0])
+ print("ERROR \"%s\"" % t.value[0])
+ #t.type = reserved.get(t.value, 'ERROR')
  t.lexer.skip(1)
-
 
 
 def cocp_lex(input_codes = ''):
@@ -167,7 +201,6 @@ def cocp_lex_output(input_filename=None, output_filename=None):
       print('#{tok_line} {tok_type} {tok_value}'.format(tok_line=tok.lineno, tok_type=tok.type, tok_value=tok.value), file=out_f)
 
 if __name__ == '__main__':
-  print('=== lexer.py ===')
   with open(sys.argv[1],'r') as f:
     input_codes = f.read()
     cocp_lex(input_codes)

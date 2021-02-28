@@ -1,10 +1,16 @@
 import pytest
 import pytest_check as check
+import os
 from cocp.lexer import cocp_lex_output
 
-INPUT_TEST_CL_FILENAME = 'lexer_input_test.cl'
-COCP_LEXER_OUTPUT_FILENAME = 'lexer_test_cocp_output.txt'
-STD_LEXER_OUTPUT_FILENAME = 'lexer_test_std_output.txt'
+
+working_dir = os.path.dirname(os.path.abspath(__file__))
+
+INPUT_TEST_CL_FILENAME = os.path.join(working_dir, 'lexer_input_test.cl')
+COCP_LEXER_OUTPUT_FILENAME = os.path.join(working_dir, 'lexer_test_cocp_output.txt')
+STD_LEXER_OUTPUT_FILENAME = os.path.join(working_dir, 'lexer_test_std_output.txt')
+
+
 
 def setup():
   #print("SETUP")
