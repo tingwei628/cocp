@@ -26,8 +26,7 @@ reserved = {
     'of': 'OF',
     'new': 'NEW',
     'isvoid': 'ISVOID',
-    'not': 'NOT',
-    'error': 'ERROR'
+    'not': 'NOT'
 } 
 
 tokens = [
@@ -56,6 +55,7 @@ tokens = [
     'DARROW',
     'AT',
     'INT_COMP',
+    'ERROR'
      #'STRING_ERROR'
 ] + list(reserved.values())
 
@@ -141,7 +141,6 @@ def t_COMMENT_end(t):
     t.lexer.lineno += t.value.count('\n')
     t.lexer.lineno += t.value.count('\r\n')
     t.lexer.begin('INITIAL')
-    
 
 def t_TYPEID(t):
  r'[A-Z][a-zA-Z_0-9]*'
@@ -154,7 +153,17 @@ def t_OBJECTID(t):
  return t
 
 def t_COMMENT_error(t):
-  t.lexer.skip(1)
+  #print(dir(t.lexer))
+  #print(t.lexer.current_state())
+  #print(t.lexer.lineno)
+  #print('\n')
+  #t.lexer.skip(1)
+  if t.lexer.current_state() == 'COMMENT': 
+    print(dir(t.lexer))
+    #print(t.lexer.current_state())
+    print(t.lexer.lineno)
+    print('\n')
+    t.lexer.skip(1)  
 
 """
 def t_STRING_ERROR(t):
@@ -168,7 +177,10 @@ def t_STRING_ERROR(t):
 def t_error(t):
  print("ERROR \"%s\"" % t.value[0])
  #t.type = reserved.get(t.value, 'ERROR')
+ t.type = 'ERROR'
+ t.value = '\"{value}\"'.format(value=t.value[0])
  t.lexer.skip(1)
+ return t
 
 
 def cocp_lex(input_codes = ''):
