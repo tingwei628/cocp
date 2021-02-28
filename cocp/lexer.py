@@ -56,7 +56,6 @@ tokens = [
     'AT',
     'INT_COMP',
     'ERROR'
-     #'STRING_ERROR'
 ] + list(reserved.values())
 
  # Regular expression rules for simple tokens
@@ -81,12 +80,12 @@ t_COLON = r'\:'
 t_AT = r'\@'
 t_INT_COMP = r'~'
 
+
 states = (
   ('COMMENT', 'exclusive'),       
 )
 
 t_COMMENT_ignore = ''
-
 
 # A regular expression rule with some action code
 def t_INT_CONST(t):
@@ -135,6 +134,10 @@ def t_COMMENT_end(t):
   r'\*\)'
   t.lexer.comment_count -= 1 
   
+  # unmatched *)
+  if t.lexer.current_state() != 'COMMENT':
+    return t_error(t)
+
   if t.lexer.comment_count == 0:
     t.value = t.lexer.lexdata[t.lexer.code_start: t.lexer.lexpos]
     #t.type = 'COMMENT'
@@ -153,30 +156,17 @@ def t_OBJECTID(t):
  return t
 
 def t_COMMENT_error(t):
-  #print(dir(t.lexer))
-  #print(t.lexer.current_state())
-  #print(t.lexer.lineno)
-  #print('\n')
-  #t.lexer.skip(1)
-  if t.lexer.current_state() == 'COMMENT': 
-    print(dir(t.lexer))
-    #print(t.lexer.current_state())
-    print(t.lexer.lineno)
-    print('\n')
-    t.lexer.skip(1)  
-
-"""
-def t_STRING_ERROR(t):
-  
-  t.type = 'ERROR'
-  print('ERROR "{err}"'.format(err=t))
+  last_pos = t.lexer.lexlen-1 
   t.lexer.skip(1)
-"""
+  if t.lexer.current_state() == 'COMMENT' and last_pos == t.lexer.lexpos:
+    t.type = 'ERROR'
+    t.value = '\"EOF in comment\"'
+    t.lineno += t.lexer.lexdata[t.lexer.code_start: t.lexer.lexpos].count('\n') + t.lexer.lexdata[t.lexer.code_start: t.lexer.lexpos].count('\r\n')+1
+    return t
+
 
 # Error handling rule
 def t_error(t):
- print("ERROR \"%s\"" % t.value[0])
- #t.type = reserved.get(t.value, 'ERROR')
  t.type = 'ERROR'
  t.value = '\"{value}\"'.format(value=t.value[0])
  t.lexer.skip(1)
@@ -190,7 +180,6 @@ def cocp_lex(input_codes = ''):
 
   # Give the lexer some input
   lexer.input(input_codes)
-
   # Tokenize
   while True:
     tok = lexer.token()
@@ -207,7 +196,6 @@ def cocp_lex_output(input_filename=None, output_filename=None):
     input_codes = f.read()
   
   result = cocp_lex(input_codes)
-  
   with open(output_filename, 'w') as out_f:
     for tok in result:
       print('#{tok_line} {tok_type} {tok_value}'.format(tok_line=tok.lineno, tok_type=tok.type, tok_value=tok.value), file=out_f)
