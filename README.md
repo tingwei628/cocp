@@ -9,3 +9,6 @@ CodeGen: [AArch64](https://en.wikipedia.org/wiki/AArch64)
 
 ### Acknowledgments
 - [PyCOOLC@aalhour](https://github.com/aalhour/PyCOOLC)
+
+### Reference
+- [Computer Science from the Bottom Up](https://www.bottomupcs.com/)
