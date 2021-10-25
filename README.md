@@ -7,6 +7,10 @@ Lex Generator、Parse Generator: [ply(Python Lex-Yacc)@dabeaz](https://github.co
 
 CodeGen: [check this in AArch64](https://github.com/tingwei628/cool-compiler-1/blob/tingwei628-aarch64/doc/aarch64.md)
 
+### Wishlist
+- Assembler for COOL
+- Linker for COOL
+
 ### Acknowledgments
 - [PyCOOLC@aalhour](https://github.com/aalhour/PyCOOLC)
 
