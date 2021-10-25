@@ -11,4 +11,9 @@ CodeGen: [check this in AArch64](https://github.com/tingwei628/cool-compiler-1/b
 - [PyCOOLC@aalhour](https://github.com/aalhour/PyCOOLC)
 
 ### Reference
-- [Computer Science from the Bottom Up](https://www.bottomupcs.com/)
+
+*[COOL-Compiler-In-Py@unsat](https://github.com/unsat/COOL-Compiler-In-Py)\
+[python-cool@sidd607](https://github.com/sidd607/python-cool)\
+[CoolCompiler@harry1911](https://github.com/harry1911/CoolCompiler)\
+[CoolCompiler@JDavid17](https://github.com/JDavid17/CoolCompiler)\
+[Computer Science from the Bottom Up](https://www.bottomupcs.com/)
